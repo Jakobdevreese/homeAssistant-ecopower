@@ -27,6 +27,7 @@ def energiekosten(verbruik, productie, vastTarief, terugleverTarief):
 
     return vast - teruglever
 
+
 def netkosten(verbruik, maandpiek, capaciteitsTarief, databeheerTarief, afnameTarief, maximumTarief, minimumTarief):
     # de totale netkosten hebben een maximum en minimum tarief
     
@@ -52,6 +53,7 @@ def heffingen(verbruik, energieBijdrageTarief, accijnzenTarief):
 
     return bijdrage + accijnzen
 
+
 def bepaalAccijnzenTarief(verbruik):
     if verbruik <= 3000:
         return accijnzenTarief_0_3000
@@ -61,6 +63,7 @@ def bepaalAccijnzenTarief(verbruik):
         return accijnzenTarief_20000_50000
     else:
         return accijnzenTarief_50000
+    
 
 def bepaalMinimumTarief(capaciteitsTarief):
     # minimumtarief is een maandpiek van 2.5 kwh
