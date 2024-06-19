@@ -3,9 +3,9 @@
 import vastTariefGetter
 
 # de variabelen
-verbruik = 0
-productie = 0
-maandpiek = 0
+verbruik = 0 # zal aan sensor gekoppeld worden 
+productie = 0 # zal aan sensor gekoppeld worden
+maandpiek = 0 # zal aan sensor gekoppeld worden
 vastTarief = vastTariefGetter.getAfnameTarief()
 terugleverTarief = vastTariefGetter.getTerugleverTarief()
 capaciteitsTarief = 0
