@@ -42,7 +42,7 @@ def netkosten(verbruik, maandpiek, capaciteitsTarief, databeheerTarief, afnameTa
     afname = verbruik * afnameTarief
 
     # maximumtarief controleren
-    if ((capaciteit + databeheer + afname)/verbruik) > maximumTarief * verbruik:
+    if ((capaciteit + databeheer + afname)/verbruik) > maximumTarief:
         return maximumTarief * verbruik
     
     # minimumtarief controleren
