@@ -81,7 +81,7 @@ netkost = netkosten(verbruik, maandpiek, capaciteitsTarief, databeheerTarief, af
 heffing = heffingen(verbruik, energieBijdrageTarief, bepaalAccijnzenTarief(verbruik))
 
 totalePrijsExcBtw = energiekost + netkost + heffing
-totalePrijsIncBtw = totalePrijsExcBtw * (1 + btwTarief)
+totalePrijsIncBtw = ((totalePrijsExcBtw - heffing) * (1 + btwTarief)) + heffing
 
 
 
