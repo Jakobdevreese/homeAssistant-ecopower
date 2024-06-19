@@ -1,13 +1,18 @@
 # Berekening van het tarief
 
+import vastTariefGetter
+
 # de variabelen
-vastTarief = 0
-terugleverTarief = 0
+vastTarief = vastTariefGetter.getAfnameTarief()
+terugleverTarief = vastTariefGetter.getTerugleverTarief()
 capaciteitsTarief = 0
 databeheerTarief = 0
 afnameTarief = 0
-energieBijdrageTarief = 0
-accijnzenTarief = 0
+energieBijdrageTarief = 0.0019261
+accijnzenTarief_0_3000 = 0.04748
+accijnzenTarief_3000_20000 = 0.04748
+accijnzenTarief_20000_50000 = 0.04546
+accijnzenTarief_50000 = 0.04478
 btwTarief = 0.06 
 
 # energiekosten
