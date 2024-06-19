@@ -1,0 +1,9 @@
+{
+  "domain": "ecopower maandelijkse factuur",
+  "name": "Ecopower maandelijkse factuur",
+  "version": "0.0.1",
+  "documentation": "https://github.com/Jakobdevreese/homeAssistant-ecopower",
+  "dependencies": [],
+  "codeowners": ["@Jakobdevreese", "@Thomasderocker"],
+  "requirements": []
+}
