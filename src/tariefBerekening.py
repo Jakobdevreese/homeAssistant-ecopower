@@ -76,7 +76,11 @@ def bepaalMinimumTarief(capaciteitsTarief):
     
 
 # formule
-totalePrijsExcBtw = energiekosten(verbruik, productie, vastTarief, variabelTarief, terugleverTarief) + netkosten(verbruik, maandpiek, capaciteitsTarief, databeheerTarief, afnameTarief, maximumTarief, bepaalMinimumTarief(capaciteitsTarief)) + heffingen(verbruik, energieBijdrageTarief, bepaalAccijnzenTarief(verbruik)) 
+energiekost = energiekosten(verbruik, productie, vastTarief, variabelTarief, terugleverTarief)
+netkost = netkosten(verbruik, maandpiek, capaciteitsTarief, databeheerTarief, afnameTarief, maximumTarief, bepaalMinimumTarief(capaciteitsTarief))
+heffing = heffingen(verbruik, energieBijdrageTarief, bepaalAccijnzenTarief(verbruik))
+
+totalePrijsExcBtw = energiekost + netkost + heffing
 totalePrijsIncBtw = totalePrijsExcBtw * (1 + btwTarief)
 
 
