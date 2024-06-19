@@ -3,6 +3,7 @@
 import requests
 from bs4 import BeautifulSoup
 from datetime import datetime
+import re
 
 url = "https://www.ecopower.be/groene-stroom/prijs-nieuw"
 
@@ -40,7 +41,7 @@ def getAfnameTarief():
     for prijs in prijzen:
         text = prijs.get_text(strip=True)
         if f"AFNAMEPRIJS {huidigeMaand}" in text:
-            afname_prijs = text.split(": ")[1]
+            afname_prijs = float(re.search(r'\d+,\d+', text.split(": ")[1]).group().replace(',', '.'))
     
     return afname_prijs
 
@@ -52,7 +53,7 @@ def getTerugleverTarief():
     for prijs in prijzen:
         text = prijs.get_text(strip=True)
         if "TERUGLEVERPRIJS" in text:
-            teruglever_prijs = text.split(": ")[1]
+            teruglever_prijs = float(re.search(r'\d+,\d+', text.split(": ")[1]).group().replace(',', '.'))
         
     return teruglever_prijs
 
