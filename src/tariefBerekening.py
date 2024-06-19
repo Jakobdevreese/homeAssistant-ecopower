@@ -25,31 +25,31 @@ accijnzenTarief_50000 = 0.04478 # zoeken naar api die dit kan ophalen
 btwTarief = 0.06 
 
 # energiekosten
-def energiekosten(verbruik, productie, vastTarief, variabelTarief, terugleverTarief):
-    vast = (verbruik/2) * vastTarief
-    variabel = (verbruik/2) * variabelTarief
+def energiekosten(verbruik, productie, vastTarief, variabelTarief, terugleverTarief, btwTarief):
+    vast = ((verbruik/2) * vastTarief) * (1 + btwTarief)
+    variabel = ((verbruik/2) * variabelTarief) * (1 + btwTarief)
     teruglever = productie * terugleverTarief
 
-    return vast - teruglever
+    return (vast + variabel) - teruglever
 
 
-def netkosten(verbruik, maandpiek, capaciteitsTarief, databeheerTarief, afnameTarief, maximumTarief, minimumTarief):
+def netkosten(verbruik, maandpiek, capaciteitsTarief, databeheerTarief, afnameTarief, maximumTarief, minimumTarief, btwTarief):
     # de totale netkosten hebben een maximum en minimum tarief
     
     # berekening van de netkosten
-    capaciteit = (maandpiek * capaciteitsTarief) / 12
-    databeheer = databeheerTarief / 12
-    afname = verbruik * afnameTarief
+    capaciteitEx = (maandpiek * capaciteitsTarief) / 12
+    databeheerEx = databeheerTarief / 12
+    afnameEx = verbruik * afnameTarief
 
     # maximumtarief controleren
-    if ((capaciteit + databeheer + afname)/verbruik) > maximumTarief:
+    if ((capaciteitEx + databeheerEx + afnameEx)/verbruik) > maximumTarief:
         return maximumTarief * verbruik
     
     # minimumtarief controleren
-    if capaciteit + databeheer + afname < minimumTarief:
+    if capaciteitEx + databeheerEx + afnameEx < minimumTarief:
         return minimumTarief
 
-    return capaciteit + databeheer + afname
+    return pasBTWToe(capaciteitEx, btwTarief) + pasBTWToe(databeheerEx, btwTarief) + pasBTWToe(afnameEx, btwTarief)
 
 
 def heffingen(verbruik, energieBijdrageTarief, accijnzenTarief):
@@ -73,15 +73,18 @@ def bepaalAccijnzenTarief(verbruik):
 def bepaalMinimumTarief(capaciteitsTarief):
     # minimumtarief is een maandpiek van 2.5 kwh
     return 2.5 * capaciteitsTarief
+
+def pasBTWToe(bedrag, btwTarief):
+    return bedrag * (1 + btwTarief)
     
 
 # formule
-energiekost = energiekosten(verbruik, productie, vastTarief, variabelTarief, terugleverTarief)
+energiekost = energiekosten(verbruik, productie, vastTarief, variabelTarief, terugleverTarief, btwTarief)
 netkost = netkosten(verbruik, maandpiek, capaciteitsTarief, databeheerTarief, afnameTarief, maximumTarief, bepaalMinimumTarief(capaciteitsTarief))
 heffing = heffingen(verbruik, energieBijdrageTarief, bepaalAccijnzenTarief(verbruik))
 
-totalePrijsExcBtw = energiekost + netkost + heffing
-totalePrijsIncBtw = ((totalePrijsExcBtw - heffing) * (1 + btwTarief)) + heffing
+totaal = energiekost + netkost + heffing
+
 
 
 
