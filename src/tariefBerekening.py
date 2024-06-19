@@ -4,25 +4,14 @@ import vastTariefGetter
 import gemiddeldeMaandpiekBerekening
 import variabelTariefGetter
 
-# de variabelen
-postcode = 9052 # zal ingegeven worden door de gebruiker -> om capaciteitstarief te bepalen
-verbruik = 0 # zal aan sensor gekoppeld worden 
-productie = 0 # zal aan sensor gekoppeld worden
-maandpiek = gemiddeldeMaandpiekBerekening.getGemiddeldeMaandpiek()
-vastTarief = vastTariefGetter.getAfnameTarief()
-variabelTarief = variabelTariefGetter.getVariabelTarief()
-terugleverTarief = vastTariefGetter.getTerugleverTarief()
-capaciteitsTarief = 39.4068693 # op basis van postcode bepalen - zoeken naar api die dit kan ophalen (voorlopig ingesteld op imewo)
-maximumTarief = 0.1920264
-minimumTarief = 0 # bepalen aan de hand van minimum maandpiek van 2.5kw 
-databeheerTarief = 13.16 # per jaar - zoeken naar api die dit kan ophalen
-afnameTarief = 0
-energieBijdrageTarief = 0.0019261 # zoeken naar api die dit kan ophalen
-accijnzenTarief_0_3000 = 0.04748 # zoeken naar api die dit kan ophalen
-accijnzenTarief_3000_20000 = 0.04748 # zoeken naar api die dit kan ophalen
-accijnzenTarief_20000_50000 = 0.04546 # zoeken naar api die dit kan ophalen
-accijnzenTarief_50000 = 0.04478 # zoeken naar api die dit kan ophalen
-btwTarief = 0.06 
+
+
+
+
+
+
+
+
 
 # energiekosten
 def energiekosten(verbruik, productie, vastTarief, variabelTarief, terugleverTarief, btwTarief):
@@ -60,6 +49,11 @@ def heffingen(verbruik, energieBijdrageTarief, accijnzenTarief):
 
 
 def bepaalAccijnzenTarief(verbruik):
+    accijnzenTarief_0_3000 = 0.04748 # zoeken naar api die dit kan ophalen
+    accijnzenTarief_3000_20000 = 0.04748 # zoeken naar api die dit kan ophalen
+    accijnzenTarief_20000_50000 = 0.04546 # zoeken naar api die dit kan ophalen
+    accijnzenTarief_50000 = 0.04478 # zoeken naar api die dit kan ophalen
+    
     if verbruik <= 3000:
         return accijnzenTarief_0_3000
     elif verbruik <= 20000:
@@ -76,14 +70,34 @@ def bepaalMinimumTarief(capaciteitsTarief):
 
 def pasBTWToe(bedrag, btwTarief):
     return bedrag * (1 + btwTarief)
+
+def berekenMaandFactuur(data):
+    postcode = data.get("postcode")
+    verbruik = data.get("verbruik_tarief_1") + data.get("verbruik_tarief_2")
+    productie = data.get("productie_tarief_1") + data.get("productie_tarief_2")
+    maandpiek = gemiddeldeMaandpiekBerekening.getGemiddeldeMaandpiek(data.get("maandpiek_sensor"))
+    vastTarief = vastTariefGetter.getAfnameTarief()
+    variabelTarief = variabelTariefGetter.getVariabelTarief()
+    terugleverTarief = vastTariefGetter.getTerugleverTarief()
     
+    # constanten
+    capaciteitsTarief = 39.4068693 # op basis van postcode bepalen - zoeken naar api die dit kan ophalen (voorlopig ingesteld op imewo)
+    maximumTarief = 0.1920264
+    minimumTarief = 0 # bepalen aan de hand van minimum maandpiek van 2.5kw 
+    databeheerTarief = 13.16 # per jaar - zoeken naar api die dit kan ophalen
+    afnameTarief = 0
+    energieBijdrageTarief = 0.0019261 # zoeken naar api die dit kan ophalen
+    btwTarief = 0.06 
 
-# formule
-energiekost = energiekosten(verbruik, productie, vastTarief, variabelTarief, terugleverTarief, btwTarief)
-netkost = netkosten(verbruik, maandpiek, capaciteitsTarief, databeheerTarief, afnameTarief, maximumTarief, bepaalMinimumTarief(capaciteitsTarief))
-heffing = heffingen(verbruik, energieBijdrageTarief, bepaalAccijnzenTarief(verbruik))
+    # formule
+    energiekost = energiekosten(verbruik, productie, vastTarief, variabelTarief, terugleverTarief, btwTarief)
+    netkost = netkosten(verbruik, maandpiek, capaciteitsTarief, databeheerTarief, afnameTarief, maximumTarief, bepaalMinimumTarief(capaciteitsTarief))
+    heffing = heffingen(verbruik, energieBijdrageTarief, bepaalAccijnzenTarief(verbruik))
 
-totaal = energiekost + netkost + heffing
+    totaal = energiekost + netkost + heffing
+
+    return totaal    
+
 
 
 
