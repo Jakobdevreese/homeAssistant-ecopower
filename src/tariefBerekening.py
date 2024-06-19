@@ -1,12 +1,13 @@
-# Berekening van het tarief
+# Berekening van de maandfactuur op basis van verbruik en productiegegevens van afgelopen maand alsook de gemiddelde maandpiek
 
 import vastTariefGetter
+import gemiddeldeMaandpiekBerekening
 
 # de variabelen
 postcode = 9052 # zal ingegeven worden door de gebruiker -> om capaciteitstarief te bepalen
 verbruik = 0 # zal aan sensor gekoppeld worden 
 productie = 0 # zal aan sensor gekoppeld worden
-maandpiek = 0 # zal aan sensor gekoppeld worden
+maandpiek = gemiddeldeMaandpiekBerekening.getGemiddeldeMaandpiek()
 vastTarief = vastTariefGetter.getAfnameTarief()
 terugleverTarief = vastTariefGetter.getTerugleverTarief()
 capaciteitsTarief = 39.4068693 # op basis van postcode bepalen - zoeken naar api die dit kan ophalen (voorlopig ingesteld op imewo)
