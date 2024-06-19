@@ -8,16 +8,16 @@ productie = 0 # zal aan sensor gekoppeld worden
 maandpiek = 0 # zal aan sensor gekoppeld worden
 vastTarief = vastTariefGetter.getAfnameTarief()
 terugleverTarief = vastTariefGetter.getTerugleverTarief()
-capaciteitsTarief = 0
+capaciteitsTarief = 39.4068693 # op basis van postcode bepalen - zoeken naar api die dit kan ophalen (voorlopig ingesteld op imewo)
 maximumTarief = 0.1920264
 minimumTarief = 0 # bepalen aan de hand van minimum maandpiek van 2.5kw 
-databeheerTarief = 0
+databeheerTarief = 13.16 # per jaar - zoeken naar api die dit kan ophalen
 afnameTarief = 0
-energieBijdrageTarief = 0.0019261
-accijnzenTarief_0_3000 = 0.04748
-accijnzenTarief_3000_20000 = 0.04748
-accijnzenTarief_20000_50000 = 0.04546
-accijnzenTarief_50000 = 0.04478
+energieBijdrageTarief = 0.0019261 # zoeken naar api die dit kan ophalen
+accijnzenTarief_0_3000 = 0.04748 # zoeken naar api die dit kan ophalen
+accijnzenTarief_3000_20000 = 0.04748 # zoeken naar api die dit kan ophalen
+accijnzenTarief_20000_50000 = 0.04546 # zoeken naar api die dit kan ophalen
+accijnzenTarief_50000 = 0.04478 # zoeken naar api die dit kan ophalen
 btwTarief = 0.06 
 
 # energiekosten
