@@ -26,11 +26,11 @@ btwTarief = 0.06
 
 # energiekosten
 def energiekosten(verbruik, productie, vastTarief, variabelTarief, terugleverTarief, btwTarief):
-    vast = ((verbruik/2) * vastTarief) * (1 + btwTarief)
-    variabel = ((verbruik/2) * variabelTarief) * (1 + btwTarief)
+    vastEx = (verbruik/2) * vastTarief
+    variabelEx = (verbruik/2) * variabelTarief
     teruglever = productie * terugleverTarief
 
-    return (vast + variabel) - teruglever
+    return (pasBTWToe(vastEx, btwTarief) + pasBTWToe(variabelEx, btwTarief)) - teruglever
 
 
 def netkosten(verbruik, maandpiek, capaciteitsTarief, databeheerTarief, afnameTarief, maximumTarief, minimumTarief, btwTarief):
