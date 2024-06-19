@@ -2,6 +2,7 @@
 
 import vastTariefGetter
 import gemiddeldeMaandpiekBerekening
+import variabelTariefGetter
 
 # de variabelen
 postcode = 9052 # zal ingegeven worden door de gebruiker -> om capaciteitstarief te bepalen
@@ -9,6 +10,7 @@ verbruik = 0 # zal aan sensor gekoppeld worden
 productie = 0 # zal aan sensor gekoppeld worden
 maandpiek = gemiddeldeMaandpiekBerekening.getGemiddeldeMaandpiek()
 vastTarief = vastTariefGetter.getAfnameTarief()
+variabelTarief = variabelTariefGetter.getVariabelTarief()
 terugleverTarief = vastTariefGetter.getTerugleverTarief()
 capaciteitsTarief = 39.4068693 # op basis van postcode bepalen - zoeken naar api die dit kan ophalen (voorlopig ingesteld op imewo)
 maximumTarief = 0.1920264
@@ -23,8 +25,9 @@ accijnzenTarief_50000 = 0.04478 # zoeken naar api die dit kan ophalen
 btwTarief = 0.06 
 
 # energiekosten
-def energiekosten(verbruik, productie, vastTarief, terugleverTarief):
-    vast = verbruik * vastTarief
+def energiekosten(verbruik, productie, vastTarief, variabelTarief, terugleverTarief):
+    vast = (verbruik/2) * vastTarief
+    variabel = (verbruik/2) * variabelTarief
     teruglever = productie * terugleverTarief
 
     return vast - teruglever
@@ -73,7 +76,7 @@ def bepaalMinimumTarief(capaciteitsTarief):
     
 
 # formule
-totalePrijsExcBtw = energiekosten(verbruik, productie, vastTarief, terugleverTarief) + netkosten(verbruik, maandpiek, capaciteitsTarief, databeheerTarief, afnameTarief, maximumTarief, bepaalMinimumTarief(capaciteitsTarief)) + heffingen(verbruik, energieBijdrageTarief, bepaalAccijnzenTarief(verbruik)) 
+totalePrijsExcBtw = energiekosten(verbruik, productie, vastTarief, variabelTarief, terugleverTarief) + netkosten(verbruik, maandpiek, capaciteitsTarief, databeheerTarief, afnameTarief, maximumTarief, bepaalMinimumTarief(capaciteitsTarief)) + heffingen(verbruik, energieBijdrageTarief, bepaalAccijnzenTarief(verbruik)) 
 totalePrijsIncBtw = totalePrijsExcBtw * (1 + btwTarief)
 
 
