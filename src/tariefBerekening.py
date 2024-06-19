@@ -3,6 +3,7 @@
 import vastTariefGetter
 
 # de variabelen
+postcode = 9052 # zal ingegeven worden door de gebruiker -> om capaciteitstarief te bepalen
 verbruik = 0 # zal aan sensor gekoppeld worden 
 productie = 0 # zal aan sensor gekoppeld worden
 maandpiek = 0 # zal aan sensor gekoppeld worden
