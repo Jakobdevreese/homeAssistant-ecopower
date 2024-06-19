@@ -9,8 +9,8 @@ maandpiek = 0 # zal aan sensor gekoppeld worden
 vastTarief = vastTariefGetter.getAfnameTarief()
 terugleverTarief = vastTariefGetter.getTerugleverTarief()
 capaciteitsTarief = 0
-maximumTarief = 0
-minimumTarief = 0
+maximumTarief = 0.1920264
+minimumTarief = 0 # bepalen aan de hand van minimum maandpiek van 2.5kw 
 databeheerTarief = 0
 afnameTarief = 0
 energieBijdrageTarief = 0.0019261
@@ -62,8 +62,13 @@ def bepaalAccijnzenTarief(verbruik):
     else:
         return accijnzenTarief_50000
 
+def bepaalMinimumTarief(capaciteitsTarief):
+    # minimumtarief is een maandpiek van 2.5 kwh
+    return 2.5 * capaciteitsTarief
+    
+
 # formule
-totalePrijsExcBtw = energiekosten(verbruik, productie, vastTarief, terugleverTarief) + netkosten(verbruik, maandpiek, capaciteitsTarief, databeheerTarief, afnameTarief, maximumTarief, minimumTarief) + heffingen(verbruik, energieBijdrageTarief, bepaalAccijnzenTarief(verbruik)) 
+totalePrijsExcBtw = energiekosten(verbruik, productie, vastTarief, terugleverTarief) + netkosten(verbruik, maandpiek, capaciteitsTarief, databeheerTarief, afnameTarief, maximumTarief, bepaalMinimumTarief(capaciteitsTarief)) + heffingen(verbruik, energieBijdrageTarief, bepaalAccijnzenTarief(verbruik)) 
 totalePrijsIncBtw = totalePrijsExcBtw * (1 + btwTarief)
 
 
